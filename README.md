@@ -22,14 +22,16 @@ Health Coach Location
 Health Coaches Expertise
 - HC ID, Care Gap List
 
+## Assumption
+- One call will take 10 min.
+
 ## Hard Constraint  
 - One Patient will coordinate with one HC during care coordination call.
-- One call will take 10 min.
 - KPI should reach to 90%.
 
 ## Soft Constraint
-Same HC for further call follow up.
-Same City.
+- Same HC for further call follow up.
+- Same City.
 
 ## Future Scope
 - HC Rating
