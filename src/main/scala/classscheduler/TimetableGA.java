@@ -33,7 +33,7 @@ public class TimetableGA {
         Timetable timetable = initializeTimetable();
 
         // Initialize GA
-        GeneticAlgorithm ga = new GeneticAlgorithm(1, 0.01, 0.9, 2, 5);
+        GeneticAlgorithm ga = new GeneticAlgorithm(100, 0.01, 0.9, 2, 5);
 
         // Initialize population
         Population population = ga.initPopulation(timetable);
@@ -45,19 +45,19 @@ public class TimetableGA {
         int generation = 1;
 
         // Start evolution loop
-        while (ga.isTerminationConditionMet(generation, 1) == false
+        while (ga.isTerminationConditionMet(generation, 1000) == false
                 && ga.isTerminationConditionMet(population) == false) {
             // Print fitness
             System.out.println("G" + generation + " Best fitness: " + population.getFittest(0).getFitness());
 
             // Apply crossover
-//            population = ga.crossoverPopulation(population);
+            population = ga.crossoverPopulation(population);
 
             // Apply mutation
 //            population = ga.mutatePopulation(population, timetable);
 
             // Evaluate population
-//            ga.evalPopulation(population, timetable);
+            ga.evalPopulation(population, timetable);
 
             // Increment the current generation
             generation++;

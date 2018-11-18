@@ -155,9 +155,6 @@ public class Timetable {
 
         // Get individual's chromosome
         int chromosome[] = individual.getChromosome();
-        for (int c:chromosome) {
-            System.out.println(c);
-        }
         int chromosomePos = 0;
         int classIndex = 0;
 
@@ -181,9 +178,6 @@ public class Timetable {
 
                 classIndex++;
             }
-        }
-        for (Class Cls : classes) {
-            System.out.println(Cls.getClassId() + " room id " + Cls.getRoomId() + " group id " + Cls.getGroupId() + " Module Id " + Cls.getModuleId() + " Professor Id " + Cls.getProfessorId() + " TimeSlot Id " + Cls.getTimeslotId());
         }
         this.classes = classes;
     }
@@ -342,15 +336,11 @@ public class Timetable {
         int clashes = 0;
 
         for (Class classA : this.classes) {
-            System.out.println("classA Room Id" + classA.getRoomId() + " Group Id " + classA.getGroupId());
             // Check room capacity
             int roomCapacity = this.getRoom(classA.getRoomId()).getRoomCapacity();
             int groupSize = this.getGroup(classA.getGroupId()).getGroupSize();
 
             if (roomCapacity < groupSize) {
-                System.out.println("Clash Found room capacity");
-                System.out.println("Room Capacity" + roomCapacity);
-                System.out.println("Group Size" + groupSize);
                 clashes++;
             }
 
