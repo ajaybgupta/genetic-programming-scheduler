@@ -38,7 +38,7 @@ object Individual {
     */
   def getIndividualFromTimeTable(timeTable: TimeTable): Individual = {
     // Loop through groups
-    val newChromosomeList = timeTable.groupMap.values.toList.flatMap { group =>
+    val newChromosomeList = timeTable.groupMap.values.toList.sortBy(x => x.groupId).flatMap { group =>
       // Loop through modules
       group.moduleIdList.flatMap { moduleId =>
         // Add random time

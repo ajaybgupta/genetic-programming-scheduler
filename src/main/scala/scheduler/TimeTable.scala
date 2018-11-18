@@ -53,7 +53,6 @@ case class TimeTable(roomMap: Map[String, Room],
     // Calculating Clashes
     var clashes = 0
     for (courseA <- courseList) {
-      println("classA Room Id" + courseA.roomId + " Group Id " + courseA.groupId)
       // Check room capacity
       val courseARoom = roomMap(courseA.roomId.toString)
       val courseAGroup = groupMap(courseA.groupId.toString)
@@ -62,9 +61,6 @@ case class TimeTable(roomMap: Map[String, Room],
 
       if (roomCapacity < groupSize) {
         clashes += 1
-        println("Clash Found room capacity")
-        println("Room Capacity" + roomCapacity)
-        println("Group Size" + groupSize)
       }
 
       // Check if room is available
@@ -83,7 +79,6 @@ case class TimeTable(roomMap: Map[String, Room],
         clashes += 1
       }
     }
-    println("Returning Clashes as " + clashes)
     clashes
   }
 
@@ -129,6 +124,7 @@ case class TimeTable(roomMap: Map[String, Room],
 
     this.courseList = courseList
   }
+}
 
 object TimeTable {
   def initialize: TimeTable = {
@@ -136,8 +132,8 @@ object TimeTable {
     val roomMap = Map(
       "1" -> Room(1, "A1", 15),
       "2" -> Room(2, "B1", 30),
-      "3" -> Room(4, "D1", 20),
-      "4" -> Room(5, "F1", 25)
+      "4" -> Room(4, "D1", 20),
+      "5" -> Room(5, "F1", 25)
     )
 
     // Professor

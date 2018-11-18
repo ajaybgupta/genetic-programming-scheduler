@@ -6,6 +6,6 @@ package scheduler
   */
 object RandomNumberGenerator {
   def get: Double = {
-    0.56789
+    Math.random()
   }
 }
