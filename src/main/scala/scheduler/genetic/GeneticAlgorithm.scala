@@ -1,6 +1,6 @@
 package scheduler.genetic
 
-import scheduler.TimeTable
+import scheduler.{RandomNumberGenerator, TimeTable}
 
 class GeneticAlgorithm(populationSize: Int,
                        mutationRate: Double,
@@ -86,7 +86,7 @@ class GeneticAlgorithm(populationSize: Int,
     while (populationIndex < population.individualArray.length) {
       val parent1 = population.getFittest(populationIndex)
       // Apply crossover to this individual
-      if (crossoverRate > Math.random && populationIndex >= elitismCount) {
+      if (crossoverRate > RandomNumberGenerator.get && populationIndex >= elitismCount) {
         // Initialize offspring
         val offspring = new Individual(parent1.chromosome.length)
 
@@ -97,7 +97,7 @@ class GeneticAlgorithm(populationSize: Int,
         var geneIndex = 0
         while (geneIndex < parent1.chromosome.length) {
           // Use half of parent1's genes and half of parent2's genes
-          if (0.5 > Math.random) {
+          if (0.5 > RandomNumberGenerator.get) {
             offspring.setGene(geneIndex, parent1.getGene(geneIndex))
           }
           else {
@@ -107,8 +107,7 @@ class GeneticAlgorithm(populationSize: Int,
         }
         // Add offspring to new population
         newPopulation.setIndividual(populationIndex, offspring)
-      }
-      else {
+      } else {
         // Add individual to new population without applying crossover
         newPopulation.setIndividual(populationIndex, parent1)
       }
@@ -138,7 +137,7 @@ class GeneticAlgorithm(populationSize: Int,
         // Skip mutation if this is an elite individual
         if (populationIndex > this.elitismCount) {
           // Does this gene need mutation?
-          if (this.mutationRate > Math.random) {
+          if (this.mutationRate > RandomNumberGenerator.get) {
             // Swap for new gene
             individual.setGene(geneIndex, randomIndividual.getGene(geneIndex))
           }

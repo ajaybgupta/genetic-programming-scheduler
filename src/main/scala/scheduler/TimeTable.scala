@@ -25,7 +25,7 @@ case class TimeTable(roomMap: Map[String, Room],
     */
   def getRandomTimeSlot: TimeSlot = {
     val timeSlotArray = timeSlotMap.values.toArray
-    val timeSlot = timeSlotArray((timeSlotArray.length * Math.random).toInt)
+    val timeSlot = timeSlotArray((timeSlotArray.length * RandomNumberGenerator.get).toInt)
     timeSlot
   }
 
@@ -35,7 +35,7 @@ case class TimeTable(roomMap: Map[String, Room],
     */
   def getRandomRoom: Room = {
     val roomsArray = roomMap.values.toArray
-    val room = roomsArray((roomsArray.length * Math.random).toInt)
+    val room = roomsArray((roomsArray.length * RandomNumberGenerator.get).toInt)
     room
   }
 
@@ -53,7 +53,7 @@ case class TimeTable(roomMap: Map[String, Room],
     // Calculating Clashes
     var clashes = 0
     for (courseA <- courseList) {
-
+      println("classA Room Id" + courseA.roomId + " Group Id " + courseA.groupId)
       // Check room capacity
       val courseARoom = roomMap(courseA.roomId.toString)
       val courseAGroup = groupMap(courseA.groupId.toString)
@@ -62,6 +62,9 @@ case class TimeTable(roomMap: Map[String, Room],
 
       if (roomCapacity < groupSize) {
         clashes += 1
+        println("Clash Found room capacity")
+        println("Room Capacity" + roomCapacity)
+        println("Group Size" + groupSize)
       }
 
       // Check if room is available
@@ -80,6 +83,7 @@ case class TimeTable(roomMap: Map[String, Room],
         clashes += 1
       }
     }
+    println("Returning Clashes as " + clashes)
     clashes
   }
 
@@ -103,31 +107,28 @@ case class TimeTable(roomMap: Map[String, Room],
     * @param individual Individual
     */
   def createCourses(individual: Individual): Unit = {
-    // Init classes
-    val courseList = new Array[Course](getNumCourses)
-
     // Get individual's chromosome
     val chromosome = individual.chromosome
     var chromosomePos = 0
     var courseIndex = 0
 
-    for (group <- groupMap.values.toList) {
+    val courseList = groupMap.values.toList.sortBy(x => x.groupId).flatMap { group =>
       val moduleIdList = group.moduleIdList
-      for (moduleId <- moduleIdList) {
+      moduleIdList.flatMap { moduleId =>
         val timeSlotId = chromosome(chromosomePos)
-        chromosomePos += 1
-        val professorId = chromosome(chromosomePos)
         chromosomePos += 1
         val roomId = chromosome(chromosomePos)
         chromosomePos += 1
-        // Adding to Course List
-        courseList(courseIndex) = new Course(courseIndex, group.groupId, moduleId, professorId, timeSlotId, roomId)
+        val professorId = chromosome(chromosomePos)
+        chromosomePos += 1
+        val op = List(Course(courseIndex, group.groupId, moduleId, professorId, timeSlotId, roomId))
         courseIndex += 1
+        op
       }
     }
-    this.courseList = courseList.toList
+
+    this.courseList = courseList
   }
-}
 
 object TimeTable {
   def initialize: TimeTable = {
