@@ -140,7 +140,7 @@ public class GeneticAlgorithm {
                 // Skip mutation if this is an elite individual
                 if (populationIndex > this.elitismCount) {
                     // Does this gene need mutation?
-                    if (this.mutationRate > Math.random()) {
+                    if (this.mutationRate > RandomNumberGenerator.get()) {
                         // Swap for new gene
                         individual.setGene(geneIndex, randomIndividual.getGene(geneIndex));
                     }
@@ -170,7 +170,7 @@ public class GeneticAlgorithm {
             Individual parent1 = population.getFittest(populationIndex);
 
             // Apply crossover to this individual?
-            if (this.crossoverRate > Math.random() && populationIndex >= this.elitismCount) {
+            if (this.crossoverRate > RandomNumberGenerator.get() && populationIndex >= this.elitismCount) {
                 // Initialize offspring
                 Individual offspring = new Individual(parent1.getChromosomeLength());
 
@@ -180,7 +180,7 @@ public class GeneticAlgorithm {
                 // Loop over genome
                 for (int geneIndex = 0; geneIndex < parent1.getChromosomeLength(); geneIndex++) {
                     // Use half of parent1's genes and half of parent2's genes
-                    if (0.5 > Math.random()) {
+                    if (0.5 > RandomNumberGenerator.get()) {
                         offspring.setGene(geneIndex, parent1.getGene(geneIndex));
                     } else {
                         offspring.setGene(geneIndex, parent2.getGene(geneIndex));
